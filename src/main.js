@@ -12,8 +12,17 @@ Vue.use(Vant);
 //@代表src目录的绝对路径
 Vue.config.productionTip = false;
 
+Vue.filter('RMBformat', (val) => {
+  return '￥' + val + '元';
+});
+
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$API = API;
+    Vue.prototype.$bus = this;
+  },
   render: (h) => h(App),
   router, //所有的组件都可以this.$router获取到路由器对象，this.$route获取到当前匹配的路由对象
   store,
+  render: (h) => h(App),
 }).$mount('#app');
