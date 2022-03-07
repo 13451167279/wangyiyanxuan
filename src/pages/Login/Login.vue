@@ -91,8 +91,8 @@ export default {
     return {
       isLogin: true,
       isChecked: true,
-      phone: "13700000000",
-      password: "111111",
+      phone: "",
+      password: "",
     };
   },
   methods: {

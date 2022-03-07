@@ -1,65 +1,62 @@
 <template>
 
-   <div>
-  <div class="container" v-if="bannerList&&categoryItemList">
-    <van-swipe class="swiper" indicator-color="white" >
-      <van-swipe-item v-for="(banner, index) in bannerList" :key="index">
-        <img style="height:100%;" :src="banner.picUrl" alt="" />
-      </van-swipe-item>
-    </van-swipe>
+  <div>
+    <div class="container" v-if="bannerList&&categoryItemList">
+      <van-swipe class="swiper" indicator-color="white">
+        <van-swipe-item v-for="(banner, index) in bannerList" :key="index">
+          <img :src="banner.picUrl" alt="" />
+        </van-swipe-item>
+      </van-swipe>
 
-    <div class="goodsGrid">
-      <div class="gridList" v-for="(item1,index) in categoryItemList" :key="index" > 
-       <div class="header" v-if="categoryItemList">
-          <div class="title">{{ categoryItemList[index].category.name }}</div>
-          <div class="desc">{{ categoryItemList[index].category.frontDesc }}</div>
-       </div>
-        <div class="content">
-          <div class="gridItem" v-for="(item2,index) in item1.itemList" :key="item2.id">
-            <div class="img">
-              <img
-                :src="item2.listPicUrl"
-                alt=""
-                v-lazy="item2.listPicUrl"
-              />
-
-              <div class="picPrice">
-                <div class="specialPrice">
-                  <div>特价</div>
-                  <div v-if="item2.counterPrice">￥{{item2.counterPrice}}</div>
-                </div>
-                <div class="remainingTime" v-if="item2.listPromBanner">{{item2.listPromBanner.content}}</div>
-                <div class="remaining" v-if="!item2.listPromBanner">{{item2.simpleDesc}}</div>
-              </div>
-            </div>
-
-            <div class="desc">{{ item2.name }}</div>
-            <div class="price">
-              <span class="currentPrice">￥{{item2.retailPrice}}</span>
-              <span class="originPrice" v-if="item2.counterPrice">￥{{item2.counterPrice}}</span>
-            </div>
-            <div class="price2" v-if="item2.counterPrice">特价</div>
+      <div class="goodsGrid">
+        <div class="gridList" v-for="(item1,index) in categoryItemList" :key="index">
+          <div class="header" v-if="categoryItemList">
+            <div class="title">{{ categoryItemList[index].category.name }}</div>
+            <div class="desc">{{ categoryItemList[index].category.frontDesc }}</div>
           </div>
-      
+          <div class="content">
+            <div class="gridItem" v-for="(item2,index) in item1.itemList" :key="item2.id">
+              <div class="img">
+                <img :src="item2.listPicUrl" alt="" v-lazy="item2.listPicUrl" />
+
+                <div class="picPrice">
+                  <div class="specialPrice">
+                    <div>特价</div>
+                    <div v-if="item2.counterPrice">￥{{item2.counterPrice}}</div>
+                  </div>
+                  <div class="remainingTime" v-if="item2.listPromBanner">{{item2.listPromBanner.content}}</div>
+                  <div class="remaining" v-if="!item2.listPromBanner">{{item2.simpleDesc}}</div>
+                </div>
+              </div>
+
+              <div class="desc">{{ item2.name }}</div>
+              <div class="price">
+                <span class="currentPrice">￥{{item2.retailPrice}}</span>
+                <span class="originPrice" v-if="item2.counterPrice">￥{{item2.counterPrice}}</span>
+              </div>
+              <div class="price2" v-if="item2.counterPrice">特价</div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
   </div>
-   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
   name: "Other",
+  props: ['bannerList', 'categoryItemList'],
   data() {
     return {
       categoryId: "",
     };
   },
   mounted() {
-    this.categoryId = this.$route.query.categoryId;
-    this.getCategoryList();
+    // this.categoryId = this.$route.query.categoryId;
+    // this.getCategoryList();
   },
   methods: {
     getCategoryList() {
@@ -68,22 +65,22 @@ export default {
     },
   },
   computed: {
-    ...mapState({ categoryInfo: (state) => state.home.categoryInfo }),
-    bannerList() {
-      return (this.categoryInfo.currentCategory || {}).bannerList;
-    },
-    categoryItemList() {
-      return this.categoryInfo.categoryItemList;
-      
-    },
+    // ...mapState({ categoryInfo: (state) => state.home.categoryInfo }),
+    // bannerList() {
+    //   return (this.categoryInfo.currentCategory || {}).bannerList;
+    // },
+    // categoryItemList() {
+    //   return this.categoryInfo.categoryItemList;
+
+    // },
   },
   watch: {
-    $route: {
-      handler() {
-        this.categoryId = this.$route.query.categoryId;
-        this.getCategoryList();
-      },
-    },
+    // $route: {
+    //   handler() {
+    //     this.categoryId = this.$route.query.categoryId;
+    //     this.getCategoryList();
+    //   },
+    // },
   },
 };
 </script>
@@ -91,11 +88,14 @@ export default {
 <style scoped lang="less">
 .container {
   .swiper {
+    position: relative;
+    height: 2.96rem;
     .van-swipe-item {
-      line-height: 100px;
+      height: 100%;
+      height: 2.96rem;
       img {
         width: 100%;
-        height: 100%;
+        height: auto;
       }
     }
   }
@@ -114,19 +114,19 @@ export default {
   // }
   .goodsGrid {
     .gridList {
-      .header{
-      margin-top: 20px;
-      text-align: center;
+      .header {
+        margin-top: 20px;
+        text-align: center;
         .title {
-        font-size: 16px;
-        color: #333;
-        margin-bottom: 5px;
+          font-size: 16px;
+          color: #333;
+          margin-bottom: 5px;
+        }
+        .desc {
+          font-size: 12px;
+          color: #999;
+        }
       }
-      .desc {
-        font-size: 12px;
-        color: #999;
-      }
-    }
       .content {
         display: flex;
         justify-content: space-around;
@@ -149,14 +149,13 @@ export default {
               .specialPrice {
                 position: absolute;
                 left: 0;
-                bottom: 0;
+                bottom: 18px;
                 text-align: center;
                 background-color: #ed6d2a;
                 font-weight: 400;
-                padding-left: 2px;
-                border-top-right-radius: 13px;
-                // height: 44px;
-                width: 38px;
+                padding: 0.05rem;
+                border-top-right-radius: 0.26rem;
+                width: 1.2rem;
               }
               .remainingTime {
                 position: absolute;
@@ -167,11 +166,11 @@ export default {
                 line-height: 22px;
                 background-color: #f38245;
               }
-               .remaining {
+              .remaining {
                 position: absolute;
                 right: 0px;
                 bottom: 0;
-                padding-left:3px;
+                padding-left: 3px;
                 width: 100%;
                 height: 18px;
                 line-height: 22px;

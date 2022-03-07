@@ -6,13 +6,11 @@ export default [
     meta: {
       showTabbar: true,
     },
-    children: [
-      {
-        path: 'other',
-        name: 'Other',
-        component: () => import('@/pages/Home/Other/Other'),
-      },
-    ],
+  },
+  {
+    path: '/home/homecate',
+    name: 'Homecate',
+    component: () => import('@/pages/Home/Homecate'),
   },
   {
     path: '/cart',
